@@ -8,4 +8,12 @@ st = Stack()
 q = Queue()
 tree = BinaryTree()
 
-tree.post_order(tree.root)
+tree.insert(100)
+tree.insert(25)
+tree.insert(150)
+tree.insert(6)
+tree.insert(169)
+
+tree.deletetree(169)
+
+tree.print_tree_post()

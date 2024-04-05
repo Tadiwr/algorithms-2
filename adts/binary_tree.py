@@ -11,6 +11,7 @@ class TreeNode:
 class BinaryTree:
 
     root = TreeNode()
+    out_str = ''
 
     def is_empty(self):
         return self.root.data is None
@@ -40,7 +41,6 @@ class BinaryTree:
             else:
                 prev.left = new_node
 
-
     def post_order(self, root:TreeNode):
 
         if root.left:
@@ -49,34 +49,67 @@ class BinaryTree:
         if root.right:
             self.post_order(root.right)
 
-        print(root.data)
+        self.out_str += f'{root.data} '
 
-    def insert_left(self, value):
-
-        if self.is_empty():
-            self.root.data = value
-        else:
-            new_node = TreeNode(value)
-            cur = self.root
-            prev = cur
-
-            while cur:
-                prev = cur
-                cur = cur.left
-            
-            prev.left = new_node
-
-    def insert_right(self, value):
+    def print_tree_post(self):
+        self.out_str = ''
 
         if self.is_empty():
-            self.root.data = value
+            print('Empty Tree')
         else:
-            new_node = TreeNode(value)
-            cur = self.root
-            prev = cur
+            self.post_order(self.root)
+            print(self.out_str)
 
-            while cur:
-                prev = cur
-                cur = cur.right
+    def search(self, target) -> bool:
+
+        cur = self.root
+
+        while cur:
+            if cur.data == target:
+                return True
+            else:
+                if cur.data > target:
+                    cur = cur.left
+                else:
+                    cur = cur.right
+        
+        return False
+    
+    def find_parent(self, target):
+
+        cur = self.root
+
+        while cur:
+
+            if cur.data > target:
+                if cur.left:
+                    if cur.left.data == target:
+                        return cur
+                    else:
+                        cur = cur.left
+                else:
+                    return None
+            else:
+                if cur.right:
+                    if cur.right.data == target:
+                        return cur
+                    else:
+                        cur = cur.right
+                else:
+                    return None
             
-            prev.right = new_node
+                
+    def deletetree(self, target):
+
+        if target == self.root.data:
+            self.root = TreeNode()
+        else:
+            parent = self.find_parent(target)
+
+            if parent:
+                if parent.data > target:
+                    parent.left = None
+                else:
+                    parent.right = None
+            else:
+                print('Tree was not found')
